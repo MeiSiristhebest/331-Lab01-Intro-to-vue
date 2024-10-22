@@ -46,6 +46,10 @@ body {
   cursor: not-allowed;
 }
 
+.out-of-stock-image {
+  filter: grayscale(100%);
+}
+
 h1 {
   font-size: 50px;
 }

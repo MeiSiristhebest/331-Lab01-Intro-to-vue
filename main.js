@@ -1,74 +1,46 @@
-const { createApp, ref, computed } = Vue
-
-createApp({
+const { createApp, ref, computed, reactive, toRefs } = Vue
+const app = createApp({
     setup() {
-        const product = ref('Boots')
-        const brand = ref('SE 331')
-        const productUrl = 'http://www.camt.cmu.ac.th'
-        const inventory = ref(5)
-        const onSale = ref(true)
-        const details = ref([
-            '50% cotton',
-            '30% wool',
-            '20% polyester'
-        ])
-        const variants = ref([
-            { id: 2234, color: 'green', image: './assets/images/socks_green.jpg', quantity: 50 },
-            { id: 2235, color: 'blue', image: './assets/images/socks_blue.jpg', quantity: 0 }
-        ])
-        const selectedVariant = ref(0)
-        const productSizes = ref([
-            { id: 1, size: 'S' },
-            { id: 2, size: 'M' },
-            { id: 3, size: 'L' },
-        ])
-        const cart = ref(0)
-        function addToCart() {
-            cart.value += 1
+        const cart = reactive([])
+        const premium = ref(false)
+
+        function updateCart(id) {
+            const itemIndex = cart.findIndex(item => item.id === id)
+            if (itemIndex === -1) {
+
+                cart.push({ id, quantity: 1 })
+            } else {
+
+                cart[itemIndex].quantity++
+            }
         }
-        const title = computed(() => {
-            return brand.value + ' ' + product.value
-        })
-        const isOnSale = computed(() => {
-            return brand.value + ' ' + product.value + ' ' + 'is on sale'
-        })
-        function updateImage(variantImage) {
-            image.value = variantImage
+
+
+        function removeFromCart(id) {
+            const itemIndex = cart.findIndex(item => item.id === id)
+            if (itemIndex !== -1) {
+                if (cart[itemIndex].quantity > 1) {
+
+                    cart[itemIndex].quantity--
+                } else {
+
+                    cart.splice(itemIndex, 1)
+                }
+            }
         }
-        function updateVariant(index) {
-            selectedVariant.value = index;
-        }
-        const image = computed(() => {
-            return variants.value[selectedVariant.value].image
-        })
-        const inStock = computed(() => {
-            return variants.value[selectedVariant.value].quantity
-        })
-        const toggleInStock = () => {
-            const currentVariant = variants.value[selectedVariant.value];
-            currentVariant.quantity = currentVariant.quantity > 0 ? 0 : 50;
-        }
+
         return {
-            product,
-            brand,
-            title,
-            isOnSale,
-            image,
-            productUrl,
-            inStock,
-            inventory,
-            onSale,
-            details,
-            variants,
-            selectedVariant,
-            productSizes,
             cart,
-            addToCart,
-            updateImage,
-            toggleInStock,
-            updateVariant
+            premium,
+            updateCart,
+            removeFromCart
 
         }
     }
+})
+app.component('product-details', productDetails)
+app.component('product-display', productDisplay)
+app.component('review-form', reviewForm)
+app.component('review-list', reviewList)
+app.mount('#app')
 
-}).mount('#app')

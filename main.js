@@ -3,7 +3,9 @@ const app = createApp({
     setup() {
         const cart = reactive([])
         const premium = ref(false)
-
+        const stockStatus = ref(true);
+        
+        const setStockStatus = status => stockStatus.value = status;
         function updateCart(id) {
             const itemIndex = cart.findIndex(item => item.id === id)
             if (itemIndex === -1) {
@@ -32,6 +34,8 @@ const app = createApp({
         return {
             cart,
             premium,
+            stockStatus,
+            setStockStatus,
             updateCart,
             removeFromCart
 

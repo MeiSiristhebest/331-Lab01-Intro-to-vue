@@ -5,6 +5,11 @@ body {
   color: #282828;
 }
 
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
 .button {
   margin: 30px;
   background-color: #39495c;
@@ -21,9 +26,14 @@ body {
   cursor: pointer;
 }
 
+.cart-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 25px 100px; 
+}
+
 .cart {
-  margin: 25px 100px;
-  float: right;
+  width: 200px;
   border: 1px solid #d8d8d8;
   padding: 10px 30px;
   background-color: white;
@@ -103,20 +113,31 @@ p {
 .product-display {
   display: flex;
   flex-direction: column;
-  padding: 1rem;
+  align-items: center; 
+  justify-content: center; 
 }
 
 .product-container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  margin-bottom: 1rem;
+  justify-content: center; 
+}
+
+.product-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
 }
 
 .product-image,
 .product-info {
   width: 50%;
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
 }
-
 .review-form {
   display: flex;
   flex-direction: column;

@@ -13,15 +13,18 @@
 <body>
     <div id="app">
         <div class="nav-bar"></div>
-        <div class="cart">Cart(
-            <span v-for="(item, index) in cart" :key="index">
-                Product {{ item.id }}: {{ item.quantity }}<br>
-            </span>
-            )
-        </div>
-        <product-display :premium="premium" :cart="cart" @add-to-cart="updateCart" @remove-from-cart="removeFromCart">
-            <product-details :details="details"></product-details>
-        </product-display>
+        <div class="cart-container">
+            <div class="cart">Cart(
+                <span v-for="(item, index) in cart" :key="index">
+                    Product {{ item.id }}: {{ item.quantity }}<br></span>)</div>
+            <div class="cart">Stock Status: <span>{{ stockStatus ? 'In Stock' : 'Out of Stock' }}</span></div>
+        </div> 
+        <product-display :premium="premium" :cart="cart"
+                 @add-to-cart="updateCart" 
+                 @remove-from-cart="removeFromCart"
+                 @stock-status-changed="setStockStatus">
+    <product-details :details="details"></product-details>
+</product-display>
     </div>
 
     <!-- Import Js -->
